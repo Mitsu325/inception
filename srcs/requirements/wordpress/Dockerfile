@@ -27,6 +27,4 @@ RUN cp wp-config-sample.php wp-config.php && \
 # Diretório onde o php-fpm irá armazenar o arquivo pid
 RUN mkdir -p /run/php
 
-EXPOSE 9000
-
 CMD ["php-fpm81", "-F"]
