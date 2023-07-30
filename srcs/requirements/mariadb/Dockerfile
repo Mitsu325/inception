@@ -21,4 +21,6 @@ RUN rc-service mariadb start && \
         rc-service mariadb restart && \
         rc-service mariadb stop
 
+EXPOSE 3306
+
 CMD ["mysqld_safe"]

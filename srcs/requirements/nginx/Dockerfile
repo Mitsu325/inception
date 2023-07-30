@@ -6,12 +6,12 @@ RUN apk update && \
 # Gerar o self-signed ssl certificate
 RUN openssl req \
 	-x509 -nodes -days 365 \
-	-newkey rsa:2048 -keyout /etc/ssl/private/localhost.key \
-	-out /etc/ssl/certs/localhost.crt \
-	-subj "/C=BR/ST=Sao Paulo/L=Sao Paulo/O=42SP/OU=pmitsuko/CN=pmitsuko"
+	-newkey rsa:2048 -keyout /etc/ssl/private/server.key \
+	-out /etc/ssl/certs/server.crt \
+	-subj "/C=BR/ST=Sao Paulo/L=Sao Paulo/O=42/OU=Sao Paulo/CN=pmitsuko/emailAddress=pmitsuko@mail.com"
 
 # Copiar o arquivo de configuração
-COPY /conf/https.conf /etc/nginx/conf.d
+COPY /conf/https.conf /etc/nginx/http.d/https.conf
 
 # Expor a porta 443
 EXPOSE 443
