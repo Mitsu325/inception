@@ -1,0 +1,65 @@
+version: "3.9"
+
+services:
+  mariadb:
+    container_name: mariadb
+    build:
+      context: requirements/mariadb
+      args:
+        - DATABASE_NAME
+        - DATABASE_USER
+        - DATABASE_PASSWORD
+    networks:
+      - inception
+    volumes:
+      - mariadb:/var/lib/mysql
+    restart: on-failure
+
+  wordpress:
+    container_name: wordpress
+    build:
+      context: requirements/wordpress
+      args:
+        - DATABASE_NAME
+        - DATABASE_USER
+        - DATABASE_PASSWORD
+        - DATABASE_HOST
+    networks:
+      - inception
+    volumes:
+      - wordpress:/data/wordpress
+    restart: on-failure
+    depends_on:
+      - mariadb
+
+  nginx:
+    container_name: nginx
+    build:
+      context: requirements/nginx
+    networks:
+      - inception
+    ports:
+      - 443:443
+    volumes:
+      - wordpress:/data/wordpress
+    restart: on-failure
+    depends_on:
+      - wordpress
+
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+  mariadb:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/pmitsuko/data/mariadb
+  wordpress:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/pmitsuko/data/wordpress
