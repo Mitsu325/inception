@@ -1,5 +1,7 @@
 FROM alpine:3.17
 
+ARG DATABASE_NAME DATABASE_USER DATABASE_PASSWORD DATABASE_HOST
+
 RUN apk update && \
         apk add --no-cache wget mariadb-client \
         php81-fpm php81-common php81-mysqli
@@ -19,10 +21,10 @@ WORKDIR /data/wordpress
 
 # Configurar wordpress para usar o banco mariadb
 RUN cp wp-config-sample.php wp-config.php && \
-	sed -i "s/database_name_here/wordpress_db/g" wp-config.php && \
-	sed -i "s/username_here/wuser/g" wp-config.php && \
-	sed -i "s/password_here/wpass/g" wp-config.php && \
-	sed -i "s/localhost/mariadb/g" wp-config.php
+	sed -i "s/database_name_here/$DATABASE_NAME/g" wp-config.php && \
+	sed -i "s/username_here/$DATABASE_USER/g" wp-config.php && \
+	sed -i "s/password_here/$DATABASE_PASSWORD/g" wp-config.php && \
+	sed -i "s/localhost/$DATABASE_HOST/g" wp-config.php
 
 # Diretório onde o php-fpm irá armazenar o arquivo pid
 RUN mkdir -p /run/php
