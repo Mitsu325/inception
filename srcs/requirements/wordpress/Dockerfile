@@ -20,24 +20,10 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 
 WORKDIR /data/wordpress
 
-# Baixar o wordpress
-RUN wp core download
-
-# Criar arquivo de configuração wp-config.php com dados do banco
-RUN wp config create --dbname=$DATABASE_NAME --dbuser=$DATABASE_USER \
-	--dbpass=$DATABASE_PASSWORD --dbhost=$DATABASE_HOST
-
-# Instalar o wordpress
-RUN wp core install --url=$DOMAIN_NAME --title=$WP_TITLE \
-	--admin_user=$WP_ADMIN_NAME --admin_password=$WP_ADMIN_PASS \
-	--admin_email=$WP_ADMIN_EMAIL
-
-# Criar usuário
-RUN wp user create $WP_USER_NAME $WP_USER_EMAIL --role=author --user_pass=$WP_USER_PASS
-
 # Diretório onde o php-fpm irá armazenar o arquivo pid
 RUN mkdir -p /run/php
 
 EXPOSE 9000
 
-CMD ["php-fpm81", "-F"]
+COPY tools/wp_entrypoint.sh /tmp/wp_entrypoint.sh
+ENTRYPOINT ["sh", "/tmp/wp_entrypoint.sh"]
