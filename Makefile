@@ -26,7 +26,7 @@ COMPOSE_FILE=./srcs/docker-compose.yml
 
 ## RULES ##
 
-all: hosts rvolumes volumes build up
+all: hosts rvolumes volumes up
 
 hosts:
 	sudo sed -i "s/localhost/$(LOGIN).42.fr/g" /etc/hosts
@@ -44,7 +44,7 @@ build:
 
 up:
 	@echo "$(BLUE)\n-------------- RUNNING CONTAINERS ------------\n$(DEFAULT)"
-	docker-compose -f $(COMPOSE_FILE) up -d
+	docker-compose -f $(COMPOSE_FILE) up --build --detach
 
 down:
 	@echo "$(MAGENTA)\n-------------- REMOVING CONTAINERS -----------\n$(DEFAULT)"
@@ -60,7 +60,7 @@ stop:
 
 ls:
 	@echo "$(GREEN)\n-------------------- IMAGES ------------------\n$(DEFAULT)"
-	docker images ls -a
+	docker image ls -a
 	@echo "$(GREEN)\n------------------ CONTAINERS ----------------\n$(DEFAULT)"
 	docker ps -a
 	@echo "$(GREEN)\n-------------------- VOLUME ------------------\n$(DEFAULT)"
