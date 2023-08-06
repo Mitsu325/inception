@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/05 18:23:59 by pmitsuko          #+#    #+#              #
-#    Updated: 2023/08/05 18:57:56 by pmitsuko         ###   ########.fr        #
+#    Updated: 2023/08/06 16:24:09 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ up:
 	docker-compose -f $(COMPOSE_FILE) up -d
 
 down:
-	echo "$(BLUE)\n-------------- REMOVING CONTAINERS -----------\n$(DEFAULT)"
+	echo "$(MAGENTA)\n-------------- REMOVING CONTAINERS -----------\n$(DEFAULT)"
 	docker-compose -f $(COMPOSE_FILE) down
 
 start:
@@ -55,7 +55,7 @@ start:
 	docker-compose -f $(COMPOSE_FILE) down
 
 stop:
-	echo "$(BLUE)\n-------------- STOPING CONTAINERS ------------\n$(DEFAULT)"
+	echo "$(YELLOW)\n-------------- STOPING CONTAINERS ------------\n$(DEFAULT)"
 	docker-compose -f $(COMPOSE_FILE) down
 
 ls:
