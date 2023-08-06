@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/05 18:23:59 by pmitsuko          #+#    #+#              #
-#    Updated: 2023/08/06 17:05:07 by pmitsuko         ###   ########.fr        #
+#    Updated: 2023/08/06 17:30:40 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,8 @@ ls:
 	docker network ls -f type=custom
 
 clean:
-	docker image prune -f
+	docker image rm mariadb wordpress nginx
+	docker volume prune
 
 fclean: clean down rvolumes
 
