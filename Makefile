@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/05 18:23:59 by pmitsuko          #+#    #+#              #
-#    Updated: 2023/08/06 16:24:09 by pmitsuko         ###   ########.fr        #
+#    Updated: 2023/08/06 16:27:57 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,33 +39,33 @@ rvolumes:
 	sudo rm -rf $(HOME)
 
 build:
-	echo "$(BLUE)\n--------------- BUILDING IMAGES --------------\n$(DEFAULT)"
+	@echo "$(BLUE)\n--------------- BUILDING IMAGES --------------\n$(DEFAULT)"
 	docker-compose -f $(COMPOSE_FILE) build
 
 up:
-	echo "$(BLUE)\n-------------- RUNNING CONTAINERS ------------\n$(DEFAULT)"
+	@echo "$(BLUE)\n-------------- RUNNING CONTAINERS ------------\n$(DEFAULT)"
 	docker-compose -f $(COMPOSE_FILE) up -d
 
 down:
-	echo "$(MAGENTA)\n-------------- REMOVING CONTAINERS -----------\n$(DEFAULT)"
+	@echo "$(MAGENTA)\n-------------- REMOVING CONTAINERS -----------\n$(DEFAULT)"
 	docker-compose -f $(COMPOSE_FILE) down
 
 start:
-	echo "$(BLUE)\n-------------- STARTING CONTAINERS -----------\n$(DEFAULT)"
+	@echo "$(BLUE)\n-------------- STARTING CONTAINERS -----------\n$(DEFAULT)"
 	docker-compose -f $(COMPOSE_FILE) down
 
 stop:
-	echo "$(YELLOW)\n-------------- STOPING CONTAINERS ------------\n$(DEFAULT)"
+	@echo "$(YELLOW)\n-------------- STOPING CONTAINERS ------------\n$(DEFAULT)"
 	docker-compose -f $(COMPOSE_FILE) down
 
 ls:
-	echo "$(GREEN)\n-------------------- IMAGES ------------------\n$(DEFAULT)"
+	@echo "$(GREEN)\n-------------------- IMAGES ------------------\n$(DEFAULT)"
 	docker images ls -a
-	echo "$(GREEN)\n------------------ CONTAINERS ----------------\n$(DEFAULT)"
+	@echo "$(GREEN)\n------------------ CONTAINERS ----------------\n$(DEFAULT)"
 	docker ps -a
-	echo "$(GREEN)\n-------------------- VOLUME ------------------\n$(DEFAULT)"
+	@echo "$(GREEN)\n-------------------- VOLUME ------------------\n$(DEFAULT)"
 	docker volume ls
-	echo "$(GREEN)\n------------------- NETWORK ------------------\n$(DEFAULT)"
+	@echo "$(GREEN)\n------------------- NETWORK ------------------\n$(DEFAULT)"
 	docker network ls -f type=custom
 
 clean:
