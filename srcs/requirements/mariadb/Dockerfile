@@ -16,7 +16,7 @@ RUN /etc/init.d/mariadb setup
 
 RUN rc-service mariadb start && \
         mysql -e \
-        "ALTER USER 'root'@'%' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}'; \
+        "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}'; \
         CREATE DATABASE IF NOT EXISTS $DATABASE_NAME; \
         CREATE USER '$DATABASE_USER'@'%' IDENTIFIED BY '$DATABASE_PASSWORD'; \
         GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$DATABASE_USER'@'%'; \
