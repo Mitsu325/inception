@@ -15,8 +15,8 @@ RUN sed -i "s/skip-networking/skip-networking=0/g" etc/my.cnf.d/mariadb-server.c
 RUN /etc/init.d/mariadb setup
 
 RUN rc-service mariadb start && \
-        mysql -u root -e \
-        " GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD'; FLUSH PRIVILEGES; \
+        mysql -e \
+        "ALTER USER 'root'@'%' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}'; \
         CREATE DATABASE IF NOT EXISTS $DATABASE_NAME; \
         CREATE USER '$DATABASE_USER'@'%' IDENTIFIED BY '$DATABASE_PASSWORD'; \
         GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$DATABASE_USER'@'%'; \
