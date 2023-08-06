@@ -3,9 +3,11 @@ version: "3.9"
 services:
   mariadb:
     container_name: mariadb
+    image: mariadb
     build:
       context: requirements/mariadb
       args:
+        - MYSQL_ROOT_PASSWORD
         - DATABASE_NAME
         - DATABASE_USER
         - DATABASE_PASSWORD
@@ -17,6 +19,7 @@ services:
 
   wordpress:
     container_name: wordpress
+    image: wordpress
     build:
       context: requirements/wordpress
       args:
@@ -34,6 +37,7 @@ services:
 
   nginx:
     container_name: nginx
+    image: nginx
     build:
       context: requirements/nginx
     networks:

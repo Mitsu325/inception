@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/05 18:23:59 by pmitsuko          #+#    #+#              #
-#    Updated: 2023/08/06 16:27:57 by pmitsuko         ###   ########.fr        #
+#    Updated: 2023/08/06 17:05:07 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ build:
 
 up:
 	@echo "$(BLUE)\n-------------- RUNNING CONTAINERS ------------\n$(DEFAULT)"
-	docker-compose -f $(COMPOSE_FILE) up --build --detach
+	sudo docker-compose -f $(COMPOSE_FILE) up --build --detach
 
 down:
 	@echo "$(MAGENTA)\n-------------- REMOVING CONTAINERS -----------\n$(DEFAULT)"
