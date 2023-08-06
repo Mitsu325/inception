@@ -15,7 +15,7 @@ RUN sed -i "/^listen\s=.*/c\listen = 0.0.0.0:9000" \
 # Instalar wordpress-cli
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
 	chmod +x wp-cli.phar && \
-	sudo mv wp-cli.phar /usr/local/bin/wp && \
+	mv wp-cli.phar /usr/local/bin/wp && \
 	mkdir -p /data/wordpress/
 
 WORKDIR /data/wordpress
