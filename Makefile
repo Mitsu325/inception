@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/05 18:23:59 by pmitsuko          #+#    #+#              #
-#    Updated: 2023/08/06 17:30:40 by pmitsuko         ###   ########.fr        #
+#    Updated: 2023/08/07 15:59:53 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ COMPOSE_FILE=./srcs/docker-compose.yml
 
 ## RULES ##
 
-all: hosts rvolumes volumes up
+all: hosts rmvolumes volumes up
 
 hosts:
 	sudo sed -i "s/localhost/$(LOGIN).42.fr/g" /etc/hosts
@@ -35,7 +35,7 @@ volumes:
 	sudo mkdir -p $(HOME)/wordpress
 	sudo mkdir -p $(HOME)/mariadb
 
-rvolumes:
+rmvolumes:
 	sudo rm -rf $(HOME)
 
 build:
@@ -48,15 +48,15 @@ up:
 
 down:
 	@echo "$(MAGENTA)\n-------------- REMOVING CONTAINERS -----------\n$(DEFAULT)"
-	docker-compose -f $(COMPOSE_FILE) down
+	docker-compose -f $(COMPOSE_FILE) down --rmi all --remove-orphans -v
 
 start:
 	@echo "$(BLUE)\n-------------- STARTING CONTAINERS -----------\n$(DEFAULT)"
-	docker-compose -f $(COMPOSE_FILE) down
+	docker-compose -f $(COMPOSE_FILE) start
 
 stop:
 	@echo "$(YELLOW)\n-------------- STOPING CONTAINERS ------------\n$(DEFAULT)"
-	docker-compose -f $(COMPOSE_FILE) down
+	docker-compose -f $(COMPOSE_FILE) stop
 
 ls:
 	@echo "$(GREEN)\n-------------------- IMAGES ------------------\n$(DEFAULT)"
@@ -68,13 +68,16 @@ ls:
 	@echo "$(GREEN)\n------------------- NETWORK ------------------\n$(DEFAULT)"
 	docker network ls -f type=custom
 
-clean:
+clean: down
 	docker image rm mariadb wordpress nginx
 	docker volume prune
 
-fclean: clean down rvolumes
+fclean: clean rmvolumes
+	docker system prune --all --force --volumes
+	docker network prune --force
+	docker volume prune --force
+	docker image prune --force
 
 re: fclean all
-
 
 .PHONY: all clean fclean re
