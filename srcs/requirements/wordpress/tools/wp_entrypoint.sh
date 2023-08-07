@@ -1,5 +1,21 @@
 #!/bin/sh
 
+# Instalar wordpress-cli
+wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+chmod +x wp-cli.phar && \
+mv wp-cli.phar /usr/local/bin/wp && \
+
+# Baixar o wordpress
+RUN wp core download --allow-root
+
+# Criar arquivo de configuração wp-config.php com dados do banco
+wp config create --allow-root --path=/data/wordpress \
+	--dbname=$DATABASE_NAME \
+	--dbuser=$DATABASE_USER \
+	--dbpass=$DATABASE_PASSWORD \
+	--dbhost=$DATABASE_HOST \
+	--dbprefix="wp_"
+
 # Instalar o wordpress
 wp core install --allow-root --path=/data/wordpress \
 	--url=$DOMAIN_NAME \

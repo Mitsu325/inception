@@ -2,7 +2,6 @@ version: "3.9"
 
 services:
   mariadb:
-    container_name: mariadb
     image: mariadb
     build:
       context: requirements/mariadb
@@ -11,56 +10,61 @@ services:
         - DATABASE_NAME
         - DATABASE_USER
         - DATABASE_PASSWORD
+    container_name: mariadb
     networks:
-      - inception
+      - inception_network
     volumes:
       - mariadb:/var/lib/mysql
     restart: on-failure
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "--silent"]
+      start_period: 20s
 
   wordpress:
-    container_name: wordpress
     image: wordpress
+    depends_on:
+      mariadb:
+        condition: service_healthy
     build:
       context: requirements/wordpress
-      args:
-        - DATABASE_NAME
-        - DATABASE_USER
-        - DATABASE_PASSWORD
-        - DATABASE_HOST
-        - DOMAIN_NAME
-        - WP_TITLE
-        - WP_ADMIN_NAME
-        - WP_ADMIN_PASS
-        - WP_ADMIN_EMAIL
-        - WP_USER_NAME
-        - WP_USER_PASS
-        - WP_USER_EMAIL
+    environment:
+      - DATABASE_NAME
+      - DATABASE_USER
+      - DATABASE_PASSWORD
+      - DATABASE_HOST
+      - DOMAIN_NAME
+      - WP_TITLE
+      - WP_ADMIN_NAME
+      - WP_ADMIN_PASS
+      - WP_ADMIN_EMAIL
+      - WP_USER_NAME
+      - WP_USER_PASS
+      - WP_USER_EMAIL
+    container_name: wordpress
     networks:
-      - inception
+      - inception_network
     volumes:
       - wordpress:/data/wordpress
     restart: on-failure
-    depends_on:
-      - mariadb
 
   nginx:
-    container_name: nginx
     image: nginx
+    depends_on:
+      - wordpress
     build:
       context: requirements/nginx
+    container_name: nginx
     networks:
-      - inception
+      - inception_network
     ports:
       - 443:443
     volumes:
       - wordpress:/data/wordpress
     restart: on-failure
-    depends_on:
-      - wordpress
 
 networks:
-  inception:
-    name: inception
+  inception_network:
+    name: inception_network
     driver: bridge
 
 volumes:
@@ -71,6 +75,7 @@ volumes:
       o: bind
       type: none
       device: /home/pmitsuko/data/mariadb
+
   wordpress:
     name: wordpress
     driver: local
