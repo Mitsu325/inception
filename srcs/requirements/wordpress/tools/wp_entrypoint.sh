@@ -6,7 +6,7 @@ chmod +x wp-cli.phar && \
 mv wp-cli.phar /usr/local/bin/wp && \
 
 # Baixar o wordpress
-RUN wp core download --allow-root
+wp core download --allow-root --path=/data/wordpress
 
 # Criar arquivo de configuração wp-config.php com dados do banco
 wp config create --allow-root --path=/data/wordpress \
