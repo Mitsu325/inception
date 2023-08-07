@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Baixar o wordpress
-RUN wp core download --allow-root
+wp core download --allow-root
 
 # Criar arquivo de configuração wp-config.php com dados do banco
 wp config create --dbname=$DATABASE_NAME --dbuser=$DATABASE_USER \
