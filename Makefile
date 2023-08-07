@@ -69,8 +69,6 @@ ls:
 	docker network ls -f type=custom
 
 clean: down
-	docker image rm mariadb wordpress nginx
-	docker volume prune
 
 fclean: clean rmvolumes
 	docker system prune --all --force --volumes
