@@ -26,6 +26,13 @@ WORKDIR /data/wordpress
 # Baixar o wordpress
 RUN wp core download --allow-root
 
+# Configurar wordpress para usar o banco mariadb
+RUN cp wp-config-sample.php wp-config.php && \
+	sed -i "s/database_name_here/$DATABASE_NAME/g" wp-config.php && \
+	sed -i "s/username_here/$DATABASE_USER/g" wp-config.php && \
+	sed -i "s/password_here/$DATABASE_PASSWORD/g" wp-config.php && \
+	sed -i "s/localhost/$DATABASE_HOST/g" wp-config.php
+
 # Diretório onde o php-fpm irá armazenar o arquivo pid
 RUN mkdir -p /run/php
 

@@ -1,13 +1,5 @@
 #!/bin/sh
 
-# Criar arquivo de configuração wp-config.php com dados do banco
-wp config create --allow-root --path=/data/wordpress \
-	--dbname=$DATABASE_NAME \
-	--dbuser=$DATABASE_USER \
-	--dbpass=$DATABASE_PASSWORD \
-	--dbhost=$DATABASE_HOST \
-	--dbprefix="wp_"
-
 # Instalar o wordpress
 wp core install --allow-root --path=/data/wordpress \
 	--url=$DOMAIN_NAME \
