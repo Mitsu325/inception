@@ -23,6 +23,9 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 
 WORKDIR /data/wordpress
 
+# Baixar o wordpress
+RUN wp core download --allow-root
+
 # Diretório onde o php-fpm irá armazenar o arquivo pid
 RUN mkdir -p /run/php
 
