@@ -6,6 +6,7 @@ wp config create --allow-root --path=/data/wordpress \
 	--dbuser=$DATABASE_USER \
 	--dbpass=$DATABASE_PASSWORD \
 	--dbhost=$DATABASE_HOST
+	--dbprefix=''
 
 # Instalar o wordpress
 wp core install --allow-root --path=/data/wordpress \
