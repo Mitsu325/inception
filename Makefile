@@ -26,29 +26,25 @@ ADDRESS		=	127.0.0.1
 
 ## DIRECTORIES ##
 DATA_BIND		=	/home/pmitsuko/data
-COMPOSE_FILE	=	/docker-compose.yml
+COMPOSE_FILE	=	docker-compose.yml
 
 ## RULES ##
 
-all: hosts rmvolumes volumes build up
+all: hosts rmvolumes volumes up
 
 hosts:
 	sudo chmod 646 /etc/hosts
 	echo "$(ADDRESS) $(DOMAINNAME)" >> /etc/hosts
 
 volumes:
-	mkdir -p $(DATA_BIND) $(DATA_BIND)/wordpress $(DATA_BIND)/mariadb
+	sudo mkdir -p $(DATA_BIND) $(DATA_BIND)/wordpress $(DATA_BIND)/mariadb
 
 rmvolumes:
 	sudo rm -rf $(DATA_BIND)
 
-build:
-	@echo "$(BLUE)\n--------------- BUILDING IMAGES --------------\n$(DEFAULT)"
-	cd srcs && docker-compose -f $(COMPOSE_FILE) build
-
 up:
-	@echo "$(BLUE)\n-------------- RUNNING CONTAINERS ------------\n$(DEFAULT)"
-	cd srcs && docker-compose -f $(COMPOSE_FILE) up --detach
+	@echo "$(BLUE)\n--------------- BUILDING IMAGES --------------\n$(DEFAULT)"
+	cd srcs && docker-compose -f $(COMPOSE_FILE) up --build --detach
 
 down:
 	@echo "$(MAGENTA)\n-------------- REMOVING CONTAINERS -----------\n$(DEFAULT)"
