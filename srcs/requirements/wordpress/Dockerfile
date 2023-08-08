@@ -20,4 +20,4 @@ RUN mkdir -p /run/php
 
 EXPOSE 9000
 
-ENTRYPOINT ["/usr/local/bin/wp_entrypoint.sh"]
+ENTRYPOINT ["wp_entrypoint.sh"]
