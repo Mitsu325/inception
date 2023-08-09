@@ -85,4 +85,4 @@ fclean: clean rmvolumes
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re hosts volumes rmvolumes up down start stop ls clean_hosts
